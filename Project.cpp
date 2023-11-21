@@ -1,15 +1,21 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
+//global scope
 
-objPos myPos;
+GameMechs* myGM; //game mechanics pointer
+Player* myPlayer;
 
-bool exitFlag;
+
+// objPos myPos;
+
+// bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -25,7 +31,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -43,9 +49,11 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myPos.setObjPos(2,3,'@');
+    myGM = new GameMechs(26,13); //makes board size 26x13
+    myPlayer = new Player(myGM);
 
-    exitFlag = false;
+    // myPos.setObjPos(2,3,'@');
+
 }
 
 void GetInput(void)
@@ -55,28 +63,34 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    
+
+    myPlayer -> updatePlayerDir();
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();   
 
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos); //get player position
+
+
+    MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
     //draw border 
-       for(int i = 0; i < 10; i++) //look at each row, y coord
+    for(int i = 0; i < myGM->getBoardSizeY(); i++) //look at each row, y coord
     {
-        for(int j = 0; j < 20; j++) //each column, x coord
+        for(int j = 0; j < myGM->getBoardSizeX(); j++) //each column, x coord
         {
-            if(j == 0 || j == 19 || i == 0 || i == 9)
+            if(j == 0 || j == (myGM->getBoardSizeX() - 1) || i == 0 || i == (myGM->getBoardSizeY() - 1))
             {
                 MacUILib_printf("%s","#");
             }
 
             //print character on board (iteration 0) 
-            else if(i == myPos.y && j == myPos.x)
-            {
-                MacUILib_printf("%c",myPos.symbol);
-            }
+            // else if(i == myPos.y && j == myPos.x)
+            // {
+            //     MacUILib_printf("%c",myPos.symbol);
+            // }
 
             else
             {
@@ -88,7 +102,7 @@ void DrawScreen(void)
     }
 
     //from tutorial
-    MacUILib_printf("object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
+    // MacUILib_printf("object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
 }
 
 void LoopDelay(void)

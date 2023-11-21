@@ -27,6 +27,9 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        //heap data members?
+        int **myGM;
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
