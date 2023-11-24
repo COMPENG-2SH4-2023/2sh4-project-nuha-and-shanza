@@ -42,8 +42,8 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setExitTrue(); 
             break;
 
-        //w=119up a=97left s=115down d=100right
-        case 119 : //w
+        // w=119up a=97left s=115down d=100right
+        case 'w' : //w,119
             if (myDir != UP && myDir != DOWN){
                 myDir = UP;
                 break;
@@ -51,7 +51,7 @@ void Player::updatePlayerDir()
             else myDir = myDir;
             break;
 
-        case 97 : //a
+        case 'a' : //a, 97
             if (myDir != RIGHT && myDir != LEFT){
                 myDir = LEFT;
                 break;
@@ -59,7 +59,7 @@ void Player::updatePlayerDir()
             else myDir = myDir;
             break;
 
-        case 115 : //s
+        case 's' : //s,115
             if (myDir != UP && myDir != DOWN){
                 myDir = DOWN;
                 break;
@@ -67,7 +67,7 @@ void Player::updatePlayerDir()
             else myDir = myDir;
             break;
                 
-        case 100 : //d
+        case 'd' : //d,100
             if (myDir != RIGHT && myDir != LEFT){
                 myDir = RIGHT;
                 break;

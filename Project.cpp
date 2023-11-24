@@ -47,7 +47,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(26,13); //makes board size 26x13
+    myGM = new GameMechs(20,10); //makes board size 20x10
     myPlayer = new Player(myGM); // initialize on heap
 
     //myPlayer->playerPos.setObjPos(2,3,'@');
@@ -62,11 +62,13 @@ void GetInput(void)
 void RunLogic(void)
 {
 
+    myGM -> incrementScore();
+    myGM -> setLoseFlag();
+
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
-
-
     //myGM -> setExitTrue();
+
 }
 
 void DrawScreen(void)
@@ -88,15 +90,7 @@ void DrawScreen(void)
                 MacUILib_printf("%s","#");
             }
 
-            //print character on board (iteration 0) 
-            /*
-            else if(i == myPos.y && j == myPos.x)
-            {
-                 MacUILib_printf("%c",myPos.symbol);
-            }
-            */
-           //print player position
-           else if (i == tempPos.x && j == tempPos.y )
+           else if (i == tempPos.y && j == tempPos.x)
            {
                 MacUILib_printf("%c", tempPos.getSymbol());
            }
@@ -119,9 +113,6 @@ void DrawScreen(void)
     {
         cout << "you lose " << endl;
     }
-
-    //from tutorial
-    // MacUILib_printf("object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
 }
 
 void LoopDelay(void)

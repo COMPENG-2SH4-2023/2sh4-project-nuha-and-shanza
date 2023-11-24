@@ -85,7 +85,6 @@ void GameMechs::setLoseFlag()
     //only lose if die, not force exit
      //or put into switch case, probs easier
 
-    getInput();
     if(input != 0) 
     {
         if(input == 'x')
@@ -112,15 +111,15 @@ void GameMechs::clearInput()
 
 void GameMechs::incrementScore()
 {
-    getInput();
-    if(input != 0) //or put into switch case, probs easier
+    if(input != 0) 
     {
         if(input == '1')
         {
             score++;
+            clearInput();
         }
     }
-    clearInput();
+    
     
     
 }
