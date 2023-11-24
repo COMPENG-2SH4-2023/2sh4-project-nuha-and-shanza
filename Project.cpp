@@ -66,6 +66,8 @@ void RunLogic(void)
 
     myPlayer -> updatePlayerDir();
     myGM -> setExitTrue();
+    myGM -> setLoseFlag();
+    myGM->incrementScore();
 }
 
 void DrawScreen(void)
@@ -103,7 +105,14 @@ void DrawScreen(void)
         
     }
     
-    myGM->incrementScore(); //score debug message
+    //score debug message
+    cout << "current score: " << myGM->getScore() << endl;
+    
+    //loseflag debugger
+    if(myGM->getLoseFlagStatus() == true) 
+    {
+        cout << "you lose " << endl;
+    }
 
     //from tutorial
     // MacUILib_printf("object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
@@ -117,7 +126,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    //MacUILib_clearScreen();  //uncomment if we want board deleted at end  
   
     MacUILib_uninit();
 }

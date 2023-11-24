@@ -72,7 +72,8 @@ int GameMechs::getScore()
 
 void GameMechs::setExitTrue()
 {
-    if(getInput() == 27)
+    getInput();
+    if(input == 27)
     {
         exitFlag = true;
     }
@@ -82,7 +83,20 @@ void GameMechs::setExitTrue()
 void GameMechs::setLoseFlag()
 {
     //only lose if die, not force exit
-    loseFlag = true;
+     //or put into switch case, probs easier
+
+    getInput();
+    if(input != 0) 
+    {
+        if(input == 'x')
+        {
+            loseFlag = true;
+            exitFlag = true;
+        }
+    }
+
+
+    
 }
 
 void GameMechs::setInput(char this_input)
@@ -101,12 +115,11 @@ void GameMechs::incrementScore()
     getInput();
     if(input != 0) //or put into switch case, probs easier
     {
-        if(input = '1')
+        if(input == '1')
         {
             score++;
         }
     }
-    cout << "current score: " << score << endl;
     clearInput();
     
     
