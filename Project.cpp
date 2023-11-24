@@ -10,12 +10,10 @@ using namespace std;
 //global scope
 
 GameMechs* myGM; //game mechanics pointer
-Player* myPlayer;
+Player* myPlayer; 
+//objPos myPos;
 
-
-// objPos myPos;
-
-// bool exitFlag;
+//bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -50,24 +48,25 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs(26,13); //makes board size 26x13
-    myPlayer = new Player(myGM);
+    myPlayer = new Player(myGM); // initialize on heap
 
-    // myPos.setObjPos(2,3,'@');
+    //myPlayer->playerPos.setObjPos(2,3,'@');
 
 }
 
 void GetInput(void)
 {
-    
+    myGM->getInput();
 }
 
 void RunLogic(void)
 {
 
     myPlayer -> updatePlayerDir();
-    myGM -> setExitTrue();
-    myGM -> setLoseFlag();
-    myGM->incrementScore();
+    myPlayer -> movePlayer();
+
+
+    //myGM -> setExitTrue();
 }
 
 void DrawScreen(void)
@@ -75,7 +74,7 @@ void DrawScreen(void)
     MacUILib_clearScreen();   
 
     objPos tempPos;
-    myPlayer->getPlayerPos(tempPos); //get player position
+    myPlayer->getPlayerPos(tempPos); //get player position and store in temp Pos
 
 
     MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
@@ -90,10 +89,17 @@ void DrawScreen(void)
             }
 
             //print character on board (iteration 0) 
-            // else if(i == myPos.y && j == myPos.x)
-            // {
-            //     MacUILib_printf("%c",myPos.symbol);
-            // }
+            /*
+            else if(i == myPos.y && j == myPos.x)
+            {
+                 MacUILib_printf("%c",myPos.symbol);
+            }
+            */
+           //print player position
+           else if (i == tempPos.x && j == tempPos.y )
+           {
+                MacUILib_printf("%c", tempPos.getSymbol());
+           }
 
             else
             {
