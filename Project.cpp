@@ -58,13 +58,14 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   
+    
 }
 
 void RunLogic(void)
 {
 
     myPlayer -> updatePlayerDir();
+    myGM -> setExitTrue();
 }
 
 void DrawScreen(void)
@@ -99,7 +100,10 @@ void DrawScreen(void)
             
         }
         MacUILib_printf("%s","\n");
+        
     }
+    
+    myGM->incrementScore(); //score debug message
 
     //from tutorial
     // MacUILib_printf("object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);

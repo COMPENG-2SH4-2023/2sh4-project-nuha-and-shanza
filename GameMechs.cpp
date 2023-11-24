@@ -1,9 +1,13 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+#include <iostream>
+
+using namespace std;
 
 GameMechs::GameMechs()
 {
     input = 0;
+    score = 0;
     exitFlag = false;
     loseFlag = false;
     boardSizeX = 30; //default board size
@@ -13,6 +17,7 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     input = 0;
+    score = 0;
     exitFlag = false;
     loseFlag = false;
     boardSizeX = boardX; 
@@ -67,7 +72,11 @@ int GameMechs::getScore()
 
 void GameMechs::setExitTrue()
 {
-    exitFlag = true;
+    if(getInput() == 27)
+    {
+        exitFlag = true;
+    }
+    
 }
 
 void GameMechs::setLoseFlag()
@@ -78,17 +87,29 @@ void GameMechs::setLoseFlag()
 
 void GameMechs::setInput(char this_input)
 {
-    this_input = input; //NOT SURE
+    input = this_input;
 }
 
 void GameMechs::clearInput()
 {
     input = 0; //clear most recent input
+    //call at end of player, maingamerref -> clearinput
 }
 
 void GameMechs::incrementScore()
 {
-
+    getInput();
+    if(input != 0) //or put into switch case, probs easier
+    {
+        if(input = '1')
+        {
+            score++;
+        }
+    }
+    cout << "current score: " << score << endl;
+    clearInput();
+    
+    
 }
 
 
