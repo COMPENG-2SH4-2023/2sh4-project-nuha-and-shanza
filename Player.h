@@ -3,6 +3,7 @@
 
 #include "GameMechs.h"
 #include "objPos.h"
+#include "Food.h"
 #include "objPosArrayList.h"
 
 class Player

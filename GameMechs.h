@@ -1,8 +1,8 @@
 #ifndef GAMEMECHS_H
 #define GAMEMECHS_H
 
-#include <cstdlib>
-#include <time.h>
+#include <cstdlib> //provides srand() and rand()
+#include <time.h> //provides time()
 
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -53,5 +53,6 @@ class GameMechs
       
 
 };
+
 
 #endif

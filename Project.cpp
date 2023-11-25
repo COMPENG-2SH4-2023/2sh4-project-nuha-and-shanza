@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -11,9 +12,8 @@ using namespace std;
 
 GameMechs* myGM; //game mechanics pointer
 Player* myPlayer; 
-//objPos myPos;
+Food* myFood;
 
-//bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -68,6 +68,8 @@ void RunLogic(void)
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
     //myGM -> setExitTrue();
+
+    myGM -> clearInput();
 
 }
 
@@ -126,4 +128,8 @@ void CleanUp(void)
     //MacUILib_clearScreen();  //uncomment if we want board deleted at end  
   
     MacUILib_uninit();
+
+    //remove heap instances
+    delete myGM;
+    delete myPlayer;
 }
