@@ -39,7 +39,7 @@ void objPos::setObjPos(int xPos, int yPos, char sym)
 void objPos::getObjPos(objPos &returnPos)
 {
     returnPos.setObjPos(x, y, symbol);
-}
+} 
 
 char objPos::getSymbol()
 {

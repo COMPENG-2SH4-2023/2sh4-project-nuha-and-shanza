@@ -49,6 +49,7 @@ void Initialize(void)
 
     myGM = new GameMechs(20,10); //makes board size 20x10
     myPlayer = new Player(myGM); // initialize on heap
+    myFood = new Food(myGM);
 
     //myPlayer->playerPos.setObjPos(2,3,'@');
 
@@ -67,7 +68,7 @@ void RunLogic(void)
 
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
-    //myGM -> setExitTrue();
+
 
     myGM -> clearInput();
 
@@ -79,8 +80,10 @@ void DrawScreen(void)
 
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos); //get player position and store in temp Pos
-
-
+    
+    objPos tempFoodPos;
+    myFood->getFoodPos(tempFoodPos);
+    
     MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
     //draw border 
     for(int i = 0; i < myGM->getBoardSizeY(); i++) //look at each row, y coord
@@ -96,6 +99,12 @@ void DrawScreen(void)
            {
                 MacUILib_printf("%c", tempPos.getSymbol());
            }
+
+           //for random food, not sure of correct 
+            else if(i == tempFoodPos.y && j == tempFoodPos.x)
+            {
+                MacUILib_printf("%c",tempFoodPos.getSymbol());
+            }
 
             else
             {
@@ -132,4 +141,5 @@ void CleanUp(void)
     //remove heap instances
     delete myGM;
     delete myPlayer;
+    delete myFood;
 }

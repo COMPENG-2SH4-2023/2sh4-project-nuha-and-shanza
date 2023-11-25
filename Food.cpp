@@ -2,33 +2,41 @@
 #include "MacUILib.h"
 #include <iostream>
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
-Food::Food()
+Food::Food(GameMechs* thisGMRef)
 {
+    mainGameMechsRef = thisGMRef;
+
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside game board
-    //^^dont display food
 }
 
 Food::~Food()
 {
-
+    delete[] myFood;
 }
 
 void Food::generateFood(objPos blockOff)
 {
     //random food generation (PPA3)
-    //blockOff contains player pos, NOT symbol
+    //blockOff contains player pos
 
-    //random x and y, not boarder and 0
-    //isPosEqual() for comparing element by element
+
+    //use isPosEqual() for comparing element by element
+    //IDK HOW TO USE if(foodPos.isPosEqual(blockOff))
+   
+    foodPos.x = (rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1);
+    foodPos.y = (rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1); 
 
 
 }
+    
 
-void getFoodPos(objPos &returnPos)
+void Food::getFoodPos(objPos &returnPos)
 {
     //obtains current pos of food
-    // returnPos = foodPos;
+    returnPos = foodPos;
 }
