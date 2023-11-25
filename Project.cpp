@@ -51,24 +51,29 @@ void Initialize(void)
     myPlayer = new Player(myGM); // initialize on heap
     myFood = new Food(myGM);
 
-    //myPlayer->playerPos.setObjPos(2,3,'@');
+    objPos playerPos;
+    objPos foodPos;
+  
+    myPlayer->getPlayerPos(playerPos); //get player position and store in temp Pos
+    myFood -> generateFood(playerPos);
+    
 
 }
 
 void GetInput(void)
 {
     myGM->getInput();
+    myFood->updateFood(); //press 'n' to update food 
 }
 
 void RunLogic(void)
 {
 
-    myGM -> incrementScore();
-    myGM -> setLoseFlag();
+    myGM -> incrementScore(); //press '1' 
+    myGM -> setLoseFlag(); //press 'x' to lose game
 
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
-
 
     myGM -> clearInput();
 
@@ -117,13 +122,16 @@ void DrawScreen(void)
     }
     
     //score debug message
-    cout << "current score: " << myGM->getScore() << endl;
+    MacUILib_printf("current score %d ", myGM->getScore());
     
     //loseflag debugger
     if(myGM->getLoseFlagStatus() == true) 
     {
-        cout << "you lose " << endl;
+        MacUILib_printf("\nyou lose");
     }
+
+    //food pos debug message
+     MacUILib_printf("\nfood pos: <%d, %d> + %c\n", tempFoodPos.x, tempFoodPos.y, tempFoodPos.symbol);
 }
 
 void LoopDelay(void)

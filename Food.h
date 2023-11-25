@@ -27,6 +27,7 @@ class Food
 
         void generateFood(objPos blockOff);
         void getFoodPos(objPos &returnPos);
+        void updateFood();
 
     
 };
