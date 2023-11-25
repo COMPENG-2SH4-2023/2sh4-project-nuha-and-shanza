@@ -14,7 +14,9 @@ Player::Player(GameMechs* thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
-    //delete 
+   //TO DO :
+   // ASK TA how to deallocate memory from objPos and Player
+
 
 }
 
@@ -115,7 +117,7 @@ void Player::movePlayer()
         }
     
     }
-    
+
     
 }
 
