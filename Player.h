@@ -20,16 +20,34 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+        //void getPlayerPos(objPos &returnPos); Upgrade this in iteration 3.
+        objPosArrayList* getPlayerPos(); //upgraded previous statement
         void updatePlayerDir();
-        void movePlayer();
+        void movePlayer(Food* myFood);  //accept reference to food object from project.cpp
+        bool checkFoodConsumption();
+        void increasePlayerLength();
+        
+        //Lastly, add self collision check function
+        //- if self collided 
+        //set lose flag and exit flag to true (through GM)
+        // this will break program loop and ened the game
+
+        //if ending - you need to differentiate end game state
+        //LOST - display lost message
+        //otherwise, display ENDGAME message only
+
 
     private:
-        objPos playerPos;   // Upgrade this in iteration 3.       
+        //objPos playerPos; Upgrade this in iteration 3.       
+        objPosArrayList *playerPosList; //upgraded previous statement
         enum Dir myDir;
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
+
+        Food* mainFoodRef;
+
+        
 };
 
 #endif

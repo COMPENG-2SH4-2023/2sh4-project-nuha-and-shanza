@@ -6,7 +6,7 @@
 // and modify it to support objPos array list construction.
 
 //NOTE:
-//DELETE the IF statements for debugging later. Currently they are uncommented. -Nuha
+//DELETE the IF statements for debugging later. Currently they are commented. -Nuha
 
 objPosArrayList::objPosArrayList()
 {

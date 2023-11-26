@@ -111,6 +111,7 @@ void GameMechs::clearInput()
 
 void GameMechs::incrementScore()
 {
+    
     if(input != 0) 
     {
         if(input == '1')
@@ -118,10 +119,9 @@ void GameMechs::incrementScore()
             score++;
             clearInput();
         }
+
     }
-    
-    
-    
+
 }
 
 

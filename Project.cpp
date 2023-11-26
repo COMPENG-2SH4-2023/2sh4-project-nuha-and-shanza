@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 using namespace std;
 
@@ -47,15 +48,18 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(20,10); //makes board size 20x10
+    myGM = new GameMechs(26,13); //makes board size 20x10
     myPlayer = new Player(myGM); // initialize on heap
     myFood = new Food(myGM);
 
-    objPos playerPos;
-    objPos foodPos;
+    objPos playerPos{1,1,'o'}; //TODO: remove this once generate food method is updated
+    objPos foodPos; //dont real need 
+
+    objPosArrayList* playerList = myPlayer->getPlayerPos(); //call an instance of playerList from class Player
   
-    myPlayer->getPlayerPos(playerPos); //get player position and store in temp Pos
-    myFood -> generateFood(playerPos);
+    //myPlayer->getPlayerPos(playerPos); get player position and store in temp Pos
+    //myFood -> generateFood(playerPos);
+    myFood -> generateFood(playerList); 
     
 
 }
@@ -73,7 +77,7 @@ void RunLogic(void)
     myGM -> setLoseFlag(); //press 'x' to lose game
 
     myPlayer -> updatePlayerDir();
-    myPlayer -> movePlayer();
+    myPlayer -> movePlayer(myFood);
 
     myGM -> clearInput();
 
@@ -81,29 +85,46 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();   
+    MacUILib_clearScreen();  
 
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos); //get player position and store in temp Pos
-    
+    bool drawn;
+
     objPos tempFoodPos;
     myFood->getFoodPos(tempFoodPos);
+
+    objPosArrayList* playerList = myPlayer->getPlayerPos();
+    objPos printPlayer;
+    playerList->getHeadElement(printPlayer);
+    objPos tempBody;
     
-    MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
+    
+    MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), printPlayer.x, printPlayer.y, printPlayer.symbol);
     //draw border 
     for(int i = 0; i < myGM->getBoardSizeY(); i++) //look at each row, y coord
     {
         for(int j = 0; j < myGM->getBoardSizeX(); j++) //each column, x coord
         {
+            drawn = false;
+
+            for (int k = 0; k< playerList->getSize(); k++ ) //go thogh each element in list
+            {
+                playerList->getElement(tempBody, k); //get element copy
+                if (tempBody.x == j && tempBody.y == i)
+                {
+                    MacUILib_printf("%c", tempBody.symbol);
+                    drawn = true;
+                    break;
+                }
+            }
+
+            //if player body drawn do not draw anything below;
+            if(drawn) continue;
+
+
             if(j == 0 || j == (myGM->getBoardSizeX() - 1) || i == 0 || i == (myGM->getBoardSizeY() - 1))
             {
                 MacUILib_printf("%s","#");
             }
-
-           else if (i == tempPos.y && j == tempPos.x)
-           {
-                MacUILib_printf("%c", tempPos.getSymbol());
-           }
 
            //for random food, not sure of correct 
             else if(i == tempFoodPos.y && j == tempFoodPos.x)
