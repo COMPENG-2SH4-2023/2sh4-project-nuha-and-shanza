@@ -26,6 +26,7 @@ class Player
         void movePlayer(Food* myFood);  //accept reference to food object from project.cpp
         bool checkFoodConsumption();
         void increasePlayerLength();
+        bool checkSelfCollision();
         
         //Lastly, add self collision check function
         //- if self collided 

@@ -64,6 +64,26 @@ void Player::increasePlayerLength()
 
 }
 
+bool Player::checkSelfCollision()
+{
+    objPos tempHead;
+    playerPosList->getHeadElement(tempHead);
+
+    objPos tempBody;
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(tempBody,i);
+        if(tempBody.x == tempHead.x && tempBody.y == tempHead.y)
+        {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic     
@@ -154,6 +174,25 @@ void Player::movePlayer(Food* myFood) //accept reference to food object from Pro
         }
     
     }
+
+
+    //suicide detection
+    // objPos tempBody;
+
+    // for(int i = 0; i < playerPosList->getSize(); i++)
+    // {   
+    //     playerPosList->getElement(tempBody,i+2);
+    //     if(current.x == tempBody.x && current.y == tempBody.y);
+    //         {
+    //             mainGameMechsRef->setLoseFlag();
+    //         }
+    // }
+
+    if (checkSelfCollision() == true)
+    {
+        mainGameMechsRef->setLoseFlag();
+    }
+
     
     if (foodPos.x == current.x && foodPos.y == current.y) //if collided add head, increase score, generate new food 
     {
@@ -168,5 +207,6 @@ void Player::movePlayer(Food* myFood) //accept reference to food object from Pro
         playerPosList->removeTail();
     } 
     
+
 }
 

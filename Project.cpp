@@ -53,7 +53,7 @@ void Initialize(void)
     myFood = new Food(myGM);
 
     objPos playerPos{1,1,'o'}; //TODO: remove this once generate food method is updated
-    objPos foodPos; //dont real need 
+    objPos foodPos; //dont real need, remove 
 
     objPosArrayList* playerList = myPlayer->getPlayerPos(); //call an instance of playerList from class Player
   
@@ -73,8 +73,8 @@ void GetInput(void)
 void RunLogic(void)
 {
 
-    myGM -> incrementScore(); //press '1' 
-    myGM -> setLoseFlag(); //press 'x' to lose game
+    // myGM -> incrementScore(); //press '1' 
+    // myGM -> setLoseFlag(); //press 'x' to lose game
 
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer(myFood);
@@ -143,12 +143,12 @@ void DrawScreen(void)
     }
     
     //score debug message
-    MacUILib_printf("current score %d ", myGM->getScore());
+    MacUILib_printf("Current Score %d ", myGM->getScore());
     
     //loseflag debugger
     if(myGM->getLoseFlagStatus() == true) 
     {
-        MacUILib_printf("\nyou lose");
+        MacUILib_printf("\nOh No! snake ran into itself\nYou Lose");
     }
 
     //food pos debug message

@@ -1,6 +1,9 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 #include <iostream>
+#include "Player.h"
+
+
 
 using namespace std;
 
@@ -85,14 +88,17 @@ void GameMechs::setLoseFlag()
     //only lose if die, not force exit
      //or put into switch case, probs easier
 
-    if(input != 0) 
-    {
-        if(input == 'x')
-        {
-            loseFlag = true;
-            exitFlag = true;
-        }
-    }
+    loseFlag = true;
+    exitFlag = true;    
+    
+    // if(input != 0) 
+    // {
+    //     if(input == 'x')
+    //     {
+    //         loseFlag = true;
+    //         exitFlag = true;
+    //     }
+    // }
 
 
     
@@ -111,17 +117,10 @@ void GameMechs::clearInput()
 
 void GameMechs::incrementScore()
 {
+    //i wasnt sure how to use length of playerPosList
     
-    if(input != 0) 
-    {
-        if(input == '1')
-        {
-            score++;
-            clearInput();
-        }
-
-    }
-
+    //score++ works but different than what manual says
+    score++;
 }
 
 

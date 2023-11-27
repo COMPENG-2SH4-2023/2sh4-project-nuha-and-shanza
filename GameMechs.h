@@ -7,6 +7,7 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
+
 using namespace std;
 
 
@@ -30,6 +31,7 @@ class GameMechs
         //heap data members?
         int **myGM;
 
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
@@ -51,7 +53,6 @@ class GameMechs
         int getScore();
         void incrementScore();
       
-
 };
 
 
