@@ -9,9 +9,9 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-//global scope
 
-GameMechs* myGM; //game mechanics pointer
+//global scope
+GameMechs* myGM; 
 Player* myPlayer; 
 Food* myFood;
 
@@ -48,17 +48,12 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(26,13); //makes board size 20x10
+    myGM = new GameMechs(26,13); //make board size 26,13
     myPlayer = new Player(myGM); // initialize on heap
     myFood = new Food(myGM);
 
-    objPos playerPos{1,1,'o'}; //TODO: remove this once generate food method is updated
-    objPos foodPos; //dont real need, remove 
-
-    objPosArrayList* playerList = myPlayer->getPlayerPos(); //call an instance of playerList from class Player
-  
-    //myPlayer->getPlayerPos(playerPos); get player position and store in temp Pos
-    //myFood -> generateFood(playerPos);
+    //call an instance of playerList from class Player
+    objPosArrayList* playerList = myPlayer->getPlayerPos();
     myFood -> generateFood(playerList); 
     
 
@@ -67,15 +62,10 @@ void Initialize(void)
 void GetInput(void)
 {
     myGM->getInput();
-    myFood->updateFood(); //press 'n' to update food 
 }
 
 void RunLogic(void)
 {
-
-    // myGM -> incrementScore(); //press '1' 
-    // myGM -> setLoseFlag(); //press 'x' to lose game
-
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer(myFood);
 
@@ -90,15 +80,18 @@ void DrawScreen(void)
     bool drawn;
 
     objPos tempFoodPos;
-    myFood->getFoodPos(tempFoodPos);
-
-    objPosArrayList* playerList = myPlayer->getPlayerPos();
     objPos printPlayer;
-    playerList->getHeadElement(printPlayer);
     objPos tempBody;
+
+    myFood->getFoodPos(tempFoodPos);
+    objPosArrayList* playerList = myPlayer->getPlayerPos();
+    playerList->getHeadElement(printPlayer);
     
     
-    MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), printPlayer.x, printPlayer.y, printPlayer.symbol);
+    // MacUILib_printf("board size: %dx%d, player pos: <%d, %d> + %c\n", myGM->getBoardSizeX(),myGM->getBoardSizeY(), printPlayer.x, printPlayer.y, printPlayer.symbol);
+    
+    MacUILib_printf("Welcome to Snake Game!\nPress ESC to exit\n");
+
     //draw border 
     for(int i = 0; i < myGM->getBoardSizeY(); i++) //look at each row, y coord
     {
@@ -106,7 +99,7 @@ void DrawScreen(void)
         {
             drawn = false;
 
-            for (int k = 0; k< playerList->getSize(); k++ ) //go thogh each element in list
+            for (int k = 0; k< playerList->getSize(); k++ ) //go through each element in playerlist
             {
                 playerList->getElement(tempBody, k); //get element copy
                 if (tempBody.x == j && tempBody.y == i)
@@ -117,7 +110,7 @@ void DrawScreen(void)
                 }
             }
 
-            //if player body drawn do not draw anything below;
+            //if player body drawn, do not draw anything below;
             if(drawn) continue;
 
 
@@ -126,7 +119,6 @@ void DrawScreen(void)
                 MacUILib_printf("%s","#");
             }
 
-           //for random food, not sure of correct 
             else if(i == tempFoodPos.y && j == tempFoodPos.x)
             {
                 MacUILib_printf("%c",tempFoodPos.getSymbol());
@@ -142,17 +134,23 @@ void DrawScreen(void)
         
     }
     
-    //score debug message
-    MacUILib_printf("Current Score %d ", myGM->getScore());
+    //current score
+    MacUILib_printf("Current Score: %d ", myGM->getScore());
     
-    //loseflag debugger
+    //game lost
     if(myGM->getLoseFlagStatus() == true) 
     {
-        MacUILib_printf("\nOh No! snake ran into itself\nYou Lose");
+        MacUILib_printf("\nOh No! Snake ran into itself\nYOU LOSE");
+    }
+
+    //exit game without losing
+    if(myGM->getLoseFlagStatus() == false && myGM->getExitFlagStatus() == true) 
+    {
+        MacUILib_printf("\n(Forced Exit)\nGAME END");
     }
 
     //food pos debug message
-     MacUILib_printf("\nfood pos: <%d, %d> + %c\n", tempFoodPos.x, tempFoodPos.y, tempFoodPos.symbol);
+    //  MacUILib_printf("\nfood pos: <%d, %d> + %c\n", tempFoodPos.x, tempFoodPos.y, tempFoodPos.symbol);
 }
 
 void LoopDelay(void)

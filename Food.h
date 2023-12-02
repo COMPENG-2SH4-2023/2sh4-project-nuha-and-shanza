@@ -8,13 +8,10 @@
 #include "GameMechs.h"
 #include "objPosArrayList.h"
 
-using namespace std;
-
-
 class Food
 {
     private:
-        objPos foodPos; //most recent food pos and ascii symbol
+        objPos foodPos; //most recent food position and ascii symbol
         
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;

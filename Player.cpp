@@ -7,9 +7,6 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-
-    // more actions to be included
-    //playerPos.setObjPos(3,3,'*');
     
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,mainGameMechsRef->getBoardSizeY()/2,'*');
@@ -24,7 +21,7 @@ Player::Player(GameMechs* thisGMRef)
 
 Player::~Player()
 {
-    // delete any heap members here
+    
    delete playerPosList; //We do not need [] since there is only one list. This calls on the destructor ~objPosArrayList 
    
 
@@ -32,47 +29,23 @@ Player::~Player()
 
 objPosArrayList* Player::getPlayerPos()
 {
-    // return the reference to the playerPos 
-    //arrray list
+    // return the reference to the playerPos array list
     return playerPosList;
 
 }
 
-//This function was not used we can delete 
-bool Player::checkFoodConsumption()
-{
-    objPos tempFood;
-    mainFoodRef->getFoodPos(tempFood);
-
-    objPos tempHead;
-    playerPosList->getHeadElement(tempHead);
-
-    MacUILib_printf("\nFood at %d %d\n", tempFood.x , tempFood.y);
-
-    if (tempFood.x == tempHead.x && tempFood.y == tempHead.y )  
-        return true;
-    else return false;
-
-}
-
-//This function was also not used we can delete 
-void Player::increasePlayerLength()
-{
-    objPos tempHead;
-    playerPosList->getHeadElement(tempHead);
-    playerPosList->insertHead(tempHead);
-
-}
 
 bool Player::checkSelfCollision()
 {
     objPos tempHead;
+    objPos tempBody;
+
     playerPosList->getHeadElement(tempHead);
 
-    objPos tempBody;
-    for(int i = 1; i < playerPosList->getSize(); i++)
+    for(int i = 1; i < playerPosList->getSize(); i++) 
     {
         playerPosList->getElement(tempBody,i);
+        //check if head collides with any part of snake body
         if(tempBody.x == tempHead.x && tempBody.y == tempHead.y)
         {
             return true;
@@ -85,49 +58,38 @@ bool Player::checkSelfCollision()
 
 
 void Player::updatePlayerDir()
-{
-    // PPA3 input processing logic     
+{ 
     char input = mainGameMechsRef->getInput();
 
-    //case switch to set myDir
+
     switch(input)
     {
-        case ' ': //space bar to exit
-            mainGameMechsRef->setExitTrue();
-            break;
+        case 27 : //esc key to exit
+        mainGameMechsRef->setExitTrue(); 
+        break;
 
-            case 27 : //esc key to exit
-            mainGameMechsRef->setExitTrue(); 
-            break;
-
-        // w=119up a=97left s=115down d=100right
-        case 'w' : //w,119
+        case 'w' : 
             if (myDir != UP && myDir != DOWN)
                 myDir = UP;
             break;
             
-          
-
-        case 'a' : //a, 97
+        case 'a' : 
             if (myDir != RIGHT && myDir != LEFT)
                 myDir = LEFT;
             break;
-            
 
-        case 's' : //s,115
+        case 's' :
             if (myDir != UP && myDir != DOWN)
                 myDir = DOWN;
             break;
            
                 
-        case 'd' : //d,100
+        case 'd' : 
             if (myDir != RIGHT && myDir != LEFT)
                 myDir = RIGHT;
             break;
             
-          
-
-        // Add more key processing here    
+         
         default:
             break;
         
@@ -146,7 +108,7 @@ void Player::movePlayer(Food* myFood) //accept reference to food object from Pro
     objPos foodPos; //current food object
     myFood->getFoodPos(foodPos);
 
-    // PPA3 Finite State Machine logic
+    // Finite State Machine logic
     if (myDir == LEFT){ 
         current.x -= 1;
         //wrap around
@@ -175,18 +137,6 @@ void Player::movePlayer(Food* myFood) //accept reference to food object from Pro
     
     }
 
-
-    //suicide detection
-    // objPos tempBody;
-
-    // for(int i = 0; i < playerPosList->getSize(); i++)
-    // {   
-    //     playerPosList->getElement(tempBody,i+2);
-    //     if(current.x == tempBody.x && current.y == tempBody.y);
-    //         {
-    //             mainGameMechsRef->setLoseFlag();
-    //         }
-    // }
 
     if (checkSelfCollision() == true)
     {

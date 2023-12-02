@@ -7,18 +7,11 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
-
 using namespace std;
 
 
 class GameMechs
 {
-    // Construct the remaining declaration from the project manual.
-
-    // Only some sample members are included here
-
-    // You will include more data members and member functions to complete your design.
-
     private:
         char input;
         bool exitFlag;
@@ -28,14 +21,14 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        //heap data members?
+        //heap data members
         int **myGM;
 
 
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs(); //destructor if needed
+        ~GameMechs(); //destructor
 
         bool getExitFlagStatus();
         void setExitTrue();
